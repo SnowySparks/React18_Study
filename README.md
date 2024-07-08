@@ -25,7 +25,7 @@
 
 # 파일 내용
 
-## React18_Study
+## React18
 
 자바스크립트 ES6 및 Vite 환경에서 React 18 공부
 
@@ -35,4 +35,6 @@
 
 3. Section 3 : Node.js
 
-4. Section 4 : React
+4. Section 4 : React 기초 및 시행
+
+5. Section 5 : React JSX
