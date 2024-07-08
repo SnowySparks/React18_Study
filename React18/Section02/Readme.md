@@ -117,3 +117,64 @@ for (const key in obj) {
   console.log(key, obj[key]);
 }
 ```
+
+## Array Methods
+
+
+
+- `push(data)`  : data를 해당 배열 맨 뒤에 저장
+- `pop()` : 배열 가장 맨뒤 원소 제거 후 해당 원소 리턴
+- `shift()` : 배열 가장 맨앞원소 제거후 해당 원소 리턴
+- `unshift(data)` : 배열 가장 맨앞에 원소추가
+- `slice(st, en)` : 인덱스가 [st, en) 범위 내 원소부분을 배열로 리턴, 원본은 변화x
+    - 음수를 붙이면 역순으로 적용 (맨끝이 -1, 맨첨이 -length)
+- `concat(arr)`  : 현재 배열에 arr배열이 붙어져 있는 결과를 return, 원본수정x
+
+
+- `forEach( 콜백함수(item, idx, arr) {})` : 각 배열 원소를 순서대로 돌면서 콜백함수를 수행함 , `item`은해당 원소 데이터, `idx`는 인덱스값, `arr`는 **해당 “원본” 객체 그자체**
+    
+    이를 모든 배열에 담긴 원소값을 순회하면서 직접 수정할 수 있ㅇ므
+    
+    해당 메서드는 `Array Helper methods` 중 하나
+    
+- `includes(data)` : 해당 배열 내에 data 가 있는지 판단. 있으면 `true` 아니면 `false` 리턴
+- `indexOf(data)` : 해당 data가 배열 내에 왼쪽부터 탐색해서 처음 등장하는 인덱스 위치 리턴
+    
+    만약 없으면 -1 리턴됨
+    
+    해당 메서드는 “얕은탐색” - 즉 객체를 탐색하는 방식에 어울리지 않음 
+    
+- `findIndex( callback(data) )` : 해당 콜백함수 결과가 참이 되는 첫번째 인덱스 값 리턴
+    
+    만약 없으면 -1리턴
+    
+    해당 콜백함수는 반드시 true/false 리턴처리 되어야 함
+    
+    해당 메서드는 객체 탐색에도 효과적
+    
+- `find(callback(data))` : findIndex() 와 동일하나, 리턴값은 인덱스가 아닌 “해당 데이터” 그대로 출력
+
+- `filter( callback(item, idx, arr) )` : 해당 콜백함수에서 조건에 맞는 원소들을 모아 배열로 리턴
+    
+    Array Helper Method
+    
+- `map( callback(item, idx, arr) )` : 해당 콜백함수에서 연산 결과 값(리턴값)들을 모아서 배열로 리턴
+
+- `sort( callback(a, b) )` : 해당 콜백함수 기준으로 정렬.
+    
+    콜백함수가 없으면 “사전순”으로… 즉 모든 원소를 문자열로 치환되고 그걸 사전순으로
+    
+    있는 경우 해당 연산 결과가 음수이면 a가 앞쪽으로, 양수면 b가 앞쪽으로, 0이면 아무것도 안함 의미
+    
+- `toSort( callback(a, b) )` : sort와 기능자체는 동일하나, 이것은 원본배열엔 변화없고 그 정렬 결과를 “리턴”헤줌
+
+- `join(”구분자”)` : 해당 배열을 한 문자열로 합침, 구분자로 구분해서, 단 구분자가 없으면 기본은 `,` 이 됨
+
+### Arrays Helper Methods  
+배열에 대해 자주 사용하는 로직을 재활용할 수 있게 만든 일종의 메서드 집합.  
+`forEach, map, filter, some, any, find, reduce`
+
+해당 메서드의 콜백함수에 다음과 같은 파라미터 전달 (순서대로 개시)
+- item : 원소 데이터
+- index : 해당 원소 데이터를 가리키는 인덱스값
+- arr : 해당 배열 원본 객체 
