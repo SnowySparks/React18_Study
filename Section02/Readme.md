@@ -117,22 +117,3 @@ for (const key in obj) {
   console.log(key, obj[key]);
 }
 ```
-
-## 라이브러리 호출
-
-npm 사이트에서 검색
-
-설치 : `npm i "해당명칭"`  
-(해당 명칭은 각 라이브러리 설명하는 사이트에 )
-
-이렇게 설치하면 package.json (package-lock.json) 에 이에 대한 기록이 남음
-
-`node_modules` 에는 실제 그 해당 라이브러리 관련 파일
-
-### import 방법
-
-라이브러리 호출 할 때는 경로가아닌 “해당 라이브러리” 이름을 그냥 그대로 사용
-
-```js
-import randomColor from "randomcolor"; // 라이브러리 import
-```
