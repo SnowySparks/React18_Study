@@ -1,0 +1,17 @@
+body {
+  padding: 20px;
+}
+
+.App {
+  margin: 0px auto;
+  width: 400px;
+  /* width 정하고 margin 좌우 auto -> 가운데 배치 가능 */
+}
+
+.App > section {
+  background-color: rgb(245, 245, 245);
+  border: 1px solid rgb(240, 240, 240);
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
