@@ -75,3 +75,11 @@
 7. Section 7 : Life Cycle & useEffect
 
 8. Section 8 : Todo 관리 페이지 - CRUD 다 다루기
+
+9. Section 9 : useEffect * LifeCycle
+
+10. section 10 : 최적화방식 - useMemo, React.memo, useCallback()
+
+11. section 11 : useContext - 어느 컴포넌트에든 쉽게 state & 상태변경함수 사용하기 쉽게  
+
+12. section 12 : 감정 일기장 클론 코딩
