@@ -3,42 +3,11 @@ import Button from "./Button";
 import EmotionItem from "./EmotionItem";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { emotionList } from "../util/constance";
+import { getStringedDate } from "../util/get-stringed-date";
 
-const emotionList = [
-  {
-    emotionId: 1,
-    emotionName: "완전 좋음",
-  },
-  {
-    emotionId: 2,
-    emotionName: "좋음",
-  },
-  {
-    emotionId: 3,
-    emotionName: "그럭 저럭",
-  },
-  {
-    emotionId: 4,
-    emotionName: "나쁨",
-  },
-  {
-    emotionId: 5,
-    emotionName: "끔찍함",
-  },
-];
-
-const getStringedDate = (targetDate) => {
-  // YYYY-mm-dd
-  let year = targetDate.getFullYear();
-  let month = targetDate.getMonth() + 1;
-  let date = targetDate.getDate();
-
-  if (month < 10) month = `0${month}`;
-  if (date < 10) date = `0${date}`;
-
-  return `${year}-${month}-${date}`;
-};
-
+// 수정 및 생성용, initData, onSubmit은 생성이냐, 수정이냐에 따라 그 담긴 데이터가 다름
+// 수정 -> undefined, onCreate,, 생성 -> 해당일기내용 , onUpdate
 const Editor = ({ initData, onSubmit }) => {
   const [input, setInput] = useState({
     createdDate: new Date(),
@@ -47,6 +16,7 @@ const Editor = ({ initData, onSubmit }) => {
   });
   const nav = useNavigate();
 
+  //Mount된후 initData 에 따른 입력 정보 설정 - 수정인 경우 기존 입력 정보가 다 저장됨
   useEffect(() => {
     if (initData) {
       setInput({
@@ -56,6 +26,7 @@ const Editor = ({ initData, onSubmit }) => {
     }
   }, [initData]);
 
+  // Input에 따른 onChange에 대한 처리 이벤트
   const onChangeInput = (e) => {
     setInput((current) => {
       if (e.target.name === "createdDate")

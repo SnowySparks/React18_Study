@@ -1,6 +1,13 @@
 import "./App.css";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
-import { useReducer, useRef, createContext, useMemo } from "react";
+import {
+  useReducer,
+  useRef,
+  createContext,
+  useMemo,
+  useEffect,
+  useState,
+} from "react";
 import Home from "./pages/Home";
 import Diary from "./pages/Diary";
 import New from "./pages/New";
@@ -11,49 +18,69 @@ import Header from "./components/Header";
 
 import { getEmotionImage } from "./util/get-emotion-image";
 
-const mockData = [
-  {
-    id: 1,
-    createdDate: new Date("2024-07-14").getTime(),
-    emotionId: 1,
-    content: "1번일기내용",
-  },
-  {
-    id: 2,
-    createdDate: new Date("2024-07-13").getTime(),
-    emotionId: 2,
-    content: "2번일기내용",
-  },
-  {
-    id: 3,
-    createdDate: new Date("2024-06-12").getTime(),
-    emotionId: 3,
-    content: "3번일기내용",
-  },
-];
-
 function reducer(state, action) {
+  let nextState; // localStorage에 저장하기 위함
   switch (action.type) {
-    case "CREATE":
-      return [action.data, ...state];
-    case "UPDATE":
-      return state.map((item) => {
+    case "INIT":
+      return action.data;
+    case "CREATE": {
+      nextState = [action.data, ...state];
+      break;
+    }
+    case "UPDATE": {
+      nextState = state.map((item) => {
         return String(item.id) === String(action.data.id) ? action.data : item;
       });
-    case "DELETE":
-      return state.filter((item) => {
+      break;
+    }
+    case "DELETE": {
+      nextState = state.filter((item) => {
         return String(item.id) !== String(action.id);
       });
+      break;
+    }
+    default:
+      return state;
   }
+  localStorage.setItem("diary", JSON.stringify(nextState));
+  return nextState;
 }
 
 export const DiaryStateContext = createContext();
 export const DiaryDispatchContext = createContext();
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, mockData);
-  const idRef = useRef(3);
+  // 만약에 데이터 불러오기전 useDiary 같은 Hook이 발생하는것을 막기 위해 로딩 같은거 추가
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, dispatch] = useReducer(reducer, []);
+  const idRef = useRef(0);
   // 새 일기 추가
+
+  useEffect(() => {
+    // localStorage의 diary 데이터 string 불러오기
+    const storedData = localStorage.getItem("diary");
+    if (!storedData) {
+      setIsLoading(false);
+      return;
+    } // 없으면 즉시 종료
+    const parseData = JSON.parse(storedData); //파싱
+
+    if (!Array.isArray(parseData)) {
+      setIsLoading(false);
+      return;
+    } //파싱 결과가 배열이 아니면 리턴
+    let maxId = 0;
+    parseData.forEach((item) => {
+      maxId = Math.max(maxId, Number(item.id));
+    });
+    idRef.current = maxId + 1;
+    dispatch({
+      type: "INIT",
+      data: parseData,
+    });
+    setIsLoading(false);
+  }, []);
+
   const onCreate = (createdDate, emotionId, content) => {
     dispatch({
       type: "CREATE",
@@ -90,6 +117,10 @@ function App() {
   const memoizedDispatch = useMemo(() => {
     return { onCreate, onUpdate, onDelete };
   }, []);
+
+  if (isLoading) {
+    return <div>로딩 중입니다...</div>;
+  }
 
   return (
     <>
