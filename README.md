@@ -82,4 +82,7 @@
 
 11. section 11 : useContext - 어느 컴포넌트에든 쉽게 state & 상태변경함수 사용하기 쉽게  
 
-12. section 12 : 감정 일기장 클론 코딩
+12. section 12 : 감정 일기장 클론 코딩 및 배포  
+
+## Redux  
+useContext 기능 일부 대신에 사용하는 것   
