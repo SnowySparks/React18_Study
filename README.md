@@ -86,3 +86,6 @@
 
 ## Redux  
 useContext 기능 일부 대신에 사용하는 것   
+
+## TypeScript  
+타입스크립트 기본 문법 정리 & React에 적용해보기  
