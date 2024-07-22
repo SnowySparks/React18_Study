@@ -1,61 +1,67 @@
-// unknown Type
+// 기본 타입 호환성
+let num1: number = 10;
+let num2: 10 = 10;
+num1 = num2; //Upcasting
 
-function unknownExap(): void {
-  // Unknown 은 최상위
-  // 따라서 그 하위 타입 다 가능 - 업캐스팅
-  let a: unknown = 1;
-  let b: unknown = "Hello";
-  let c: unknown = true;
-  let d: unknown = null;
-  let e: unknown = undefined;
+// 객체 타입 간 호환성
+// -> 어떤 객체 타입을 다른 객체 타입으로 취급해도 괜찮은가?
 
-  //   그 반대는 불가능 - 다운캐스팅
-  let unknownVar: unknown;
-  //   let num: number = unknownVar;
-  //   let str: string = unknownVar;
-}
+type Animal = {
+  name: string;
+  color: string;
+};
 
-// never - 공집합
-function neverExam(): void {
-  // 불가능한 함수 및 아무것도 돌아오는것 없다
-  function neverFunc(): never {
-    while (true) {}
-  }
+type Dog = {
+  name: string;
+  color: string;
+  breed: string;
+};
 
-  //   업캐스팅
-  let num: number = neverFunc();
-  let str: string = neverFunc();
-  let bool: boolean = neverFunc();
+let animal: Animal = {
+  name: "기린",
+  color: "yellow",
+};
 
-  //   다운캐스팅 - 에러
-  //   수나 string이 never에 집어넣을려고 하는것 - 에러
-  //   let never1: never = 10;
-  //   let never2: never = "string";
+let dog: Dog = {
+  name: "돌돌이",
+  color: "brown",
+  breed: "진도",
+};
 
-  //   주로 아무런 값도 저장하면 안된다는 의미로 사용하면 매우 좋음
-}
+animal = dog;
+// dog = animal;
 
-// void
-function voidExam() {
-  function voidFunc(): void {
-    console.log("Hi");
+type Book = {
+  name: string;
+  price: number;
+};
 
-    return undefined; // 이것도 업캐스팅이기에 가능
-  }
+type ProgrammingBook = {
+  name: string;
+  price: number;
+  skill: string;
+};
 
-  //   upcasting
-  let voidVar: void = undefined;
-}
+let book: Book;
+let programmingBook: ProgrammingBook = {
+  name: "ReactJS",
+  price: 2314,
+  skill: "reactjs",
+};
 
-// any - 치트기
-// 유일하게 타입계층도를 완전히 무시함
-function anyExam() {
-  let unknownVar: unknown;
-  let anyVar: any;
-  let undefinedVar: undefined;
+book = programmingBook;
 
-  //   다운캐스팅 - 근데 any는 치트키라 가능함
-  //  자기가 다운캐스팅을 하거나
-  anyVar = unknownVar;
-  undefinedVar = anyVar;
-}
+// 초과 프로퍼티 검사
+
+let book2: Book = {
+  name: "ReactJS",
+  price: 2314,
+  //skill: "reactjs",
+};
+
+function func(book: Book) {}
+func({
+  name: "ReactJS",
+  price: 2314,
+  //   skill: "reactjs", -> 에러!!!
+});
