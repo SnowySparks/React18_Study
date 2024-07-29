@@ -1,9 +1,9 @@
-interface emotionItem {
+export interface emotionItemType {
   emotionId: 1 | 2 | 3 | 4 | 5;
   emotionName: string;
 }
 
-export const emotionList: emotionItem[] = [
+export const emotionList: emotionItemType[] = [
   {
     emotionId: 1,
     emotionName: "완전 좋음",
