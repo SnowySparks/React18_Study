@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 import { DiaryType } from "@/types";
 import { getStringedDate } from "@/util/get-stringed-date";
 
-type InputType = Omit<DiaryType, "id">;
+type OptionalIdDiaryType = Omit<DiaryType, "id"> &
+  Partial<Pick<DiaryType, "id">>;
+
 export type TargetType =
   | {
       target: {
@@ -18,12 +20,12 @@ export type TargetType =
   | React.ChangeEvent<HTMLTextAreaElement>;
 
 interface Props {
-  onSubmit(input: Omit<DiaryType, "id">): void;
+  onSubmit(input: OptionalIdDiaryType): void;
   initData?: DiaryType;
 }
 
 const Editor = ({ onSubmit, initData }: Props) => {
-  const [input, setInput] = useState<InputType>({
+  const [input, setInput] = useState<OptionalIdDiaryType>({
     createdDate: new Date().getTime(),
     emotionId: 3,
     content: "",
