@@ -6,41 +6,39 @@ import Edit from "./pages/Edit";
 import Diary from "./pages/Diary";
 import { DiaryType } from "./types";
 import { Action } from "./types";
-import { createContext, useReducer, useRef, useMemo } from "react";
-
-const mockData: DiaryType[] = [
-  {
-    id: 1,
-    createdDate: new Date("2024-07-29").getTime(),
-    emotionId: 1,
-    content: "안녕11",
-  },
-  {
-    id: 2,
-    createdDate: new Date("2024-07-28").getTime(),
-    emotionId: 2,
-    content: "안녕22",
-  },
-  {
-    id: 3,
-    createdDate: new Date("2024-06-12").getTime(),
-    emotionId: 3,
-    content: "안녕33",
-  },
-];
+import {
+  createContext,
+  useReducer,
+  useRef,
+  useMemo,
+  useState,
+  useEffect,
+} from "react";
 
 function reducer(state: DiaryType[], action: Action): DiaryType[] {
+  let nextState: DiaryType[] = [];
   switch (action.type) {
-    case "CREATE":
-      return [action.data, ...state];
-    case "UPDATE":
-      return state.map((item) =>
+    case "INIT":
+      return action.data;
+    case "CREATE": {
+      nextState = [action.data, ...nextState];
+      break;
+    }
+    case "UPDATE": {
+      nextState = state.map((item) =>
         item.id === action.data.id ? action.data : item
       );
-    case "DELETE":
-      return state.filter((item) => item.id !== action.id);
+      break;
+    }
+    case "DELETE": {
+      nextState = state.filter((item) => item.id !== action.id);
+      break;
+    }
+    default:
+      return state;
   }
-  return state;
+  localStorage.setItem("diary", JSON.stringify(nextState));
+  return nextState;
 }
 
 export const DiaryStateContext = createContext<DiaryType[]>([]);
@@ -60,8 +58,36 @@ export const DiaryDispatchContext = createContext<{
 } | null>(null);
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, mockData);
-  const idRef = useRef<number>(3);
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, dispatch] = useReducer(reducer, []);
+  const idRef = useRef<number>(0);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("diary"); // string | null
+    if (!storedData) {
+      setIsLoading(false);
+      return;
+    }
+    // 이 이후론 storedData는 string 임
+    const parseData: DiaryType[] | undefined = JSON.parse(storedData);
+    if (!Array.isArray(parseData)) {
+      setIsLoading(false);
+      return;
+    }
+
+    let maxId: number = 0;
+    parseData.forEach((item) => {
+      maxId = Math.max(maxId, item.id);
+    });
+    idRef.current = maxId + 1;
+
+    dispatch({
+      type: "INIT",
+      data: parseData,
+    });
+
+    setIsLoading(false);
+  }, []);
 
   const onCreate = (
     createdDate: number,
@@ -106,6 +132,11 @@ function App() {
   const memoizedDispatch = useMemo(() => {
     return { onCreate, onUpdate, onDelete };
   }, []);
+
+  if (isLoading) {
+    return <div>로딩 중</div>;
+  }
+
   return (
     <>
       <DiaryStateContext.Provider value={data}>

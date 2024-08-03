@@ -1,6 +1,8 @@
 import "./Viewer.css";
 import { getEmotionImage } from "@/util/get-emotion-img";
 import { emotionList } from "../util/constance";
+import { useNavigate } from "react-router-dom";
+import { emotionItemType } from "@util/constance";
 
 interface Props {
   emotionId: number;
@@ -8,9 +10,15 @@ interface Props {
 }
 
 const Viewer = ({ emotionId, content }: Props) => {
+  const nav = useNavigate();
   const emotionItem = emotionList.find(
     (item) => String(item.emotionId) === String(emotionId)
-  );
+  ) as emotionItemType;
+
+  if (!emotionItem) {
+    window.alert("에러가 발생했습니다!");
+    nav("/", { replace: true });
+  }
 
   return (
     <div className="Viewer">

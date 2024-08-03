@@ -7,10 +7,14 @@ export interface DiaryType {
 
 export type Action =
   | {
-      type: "INIT" | "CREATE" | "UPDATE";
+      type: "CREATE" | "UPDATE";
       data: DiaryType;
     }
   | {
       type: "DELETE";
       id: number;
+    }
+  | {
+      type: "INIT";
+      data: DiaryType[];
     };
