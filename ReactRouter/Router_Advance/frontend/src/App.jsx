@@ -7,11 +7,15 @@ import EventDetailPage, {
   action as deleteEventAction,
 } from "./pages/EventDetailPage";
 import { RouterProvider } from "react-router-dom";
-import NewEventPage, { action as newEventAction } from "./pages/NewEventPage";
+import NewEventPage from "./pages/NewEventPage";
 import EditEventPage from "./pages/EditEventPage";
 import Root from "./pages/Root";
 import EventRoot from "./pages/EventRoot";
 import ErrorPage from "./pages/ErrorPage";
+import { action as manipulateEventAction } from "./components/EventForm";
+import NewsletterPage, {
+  action as newsletterAction,
+} from "./pages/NewsletterPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -46,15 +50,21 @@ function App() {
                 {
                   path: "edit",
                   element: <EditEventPage />,
+                  action: eventDetailLoader,
                 },
               ],
             },
             {
               path: "new",
               element: <NewEventPage />,
-              action: newEventAction,
+              action: manipulateEventAction,
             },
           ],
+        },
+        {
+          path: "newsletter",
+          element: <NewsletterPage />,
+          action: newsletterAction,
         },
       ],
     },

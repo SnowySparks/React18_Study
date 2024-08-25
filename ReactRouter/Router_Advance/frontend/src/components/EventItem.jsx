@@ -6,7 +6,7 @@ function EventItem({ event }) {
   function startDeleteHandler() {
     const proceed = window.confirm("Are you sure??");
     if (proceed) {
-      sumbit({}, { method: "delete", action: "a different path" });
+      sumbit({}, { method: "delete" });
     }
   }
 
