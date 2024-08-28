@@ -1,20 +1,26 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-import Modal from '../UI/Modal.jsx';
-import EventForm from './EventForm.jsx';
+import Modal from "../UI/Modal.jsx";
+import EventForm from "./EventForm.jsx";
+import { fetchEvent } from "../../util/http.js";
+import { useQuery } from "@tanstack/react-query";
 
 export default function EditEvent() {
   const navigate = useNavigate();
-
+  const params = useParams();
+  const { data, isPending, isError, error } = useQuery({
+    queryKey: ["event", params.id],
+    queryFn: ({ signal }) => fetchEvent({ id: params.id, signal }),
+  });
   function handleSubmit(formData) {}
 
   function handleClose() {
-    navigate('../');
+    navigate("../");
   }
 
   return (
     <Modal onClose={handleClose}>
-      <EventForm inputData={null} onSubmit={handleSubmit}>
+      <EventForm inputData={data} onSubmit={handleSubmit}>
         <Link to="../" className="button-text">
           Cancel
         </Link>
