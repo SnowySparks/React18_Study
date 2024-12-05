@@ -16,9 +16,9 @@ export default function BookItem({
     <Link href={`/book/${id}`} className={style.container}>
       <Image
         src={coverImgUrl}
-        alt={`도서 ${title}의 표시 이미지`}
         width={80}
         height={105}
+        alt={`도서 ${title}의 표지 이미지`}
       />
       <div>
         <div className={style.title}>{title}</div>

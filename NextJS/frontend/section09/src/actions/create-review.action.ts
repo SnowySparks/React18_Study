@@ -11,7 +11,7 @@ export async function createReviewAction(_: any, formData: FormData) {
   if (!bookId || !content || !author) {
     return {
       status: false,
-      error: "리뷰 내용과 작성자를 입력해 주세요",
+      error: "리뷰 내용과 작성자를 입력해주세요",
     };
   }
 
@@ -24,18 +24,15 @@ export async function createReviewAction(_: any, formData: FormData) {
         body: JSON.stringify({ bookId, content, author }),
       }
     );
-
     if (!response.ok) {
       throw new Error(response.statusText);
     }
 
+    revalidateTag(`review-${bookId}`);
     return {
       status: true,
       error: "",
     };
-
-    // 5. 태그 값을 기준으로, 데이터를 캐시 검증? - 해당 태그를 갖는 캐시를 모두 재검증
-    revalidateTag(`review-${bookId}`);
   } catch (err) {
     return {
       status: false,

@@ -1,5 +1,3 @@
-const Page = () => {
-  return <div>feed</div>;
-};
-
-export default Page;
+export default function Page() {
+  return <div>@feed</div>;
+}

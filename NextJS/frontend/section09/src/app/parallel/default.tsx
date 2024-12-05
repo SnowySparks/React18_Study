@@ -1,5 +1,3 @@
-const Default = () => {
-  return <div>@parallel/default</div>;
-};
-
-export default Default;
+export default function Default() {
+  return <div>/parallel/default</div>;
+}

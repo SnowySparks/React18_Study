@@ -1,7 +1,7 @@
 import Link from "next/link";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
-const Layout = ({
+export default function Layout({
   children,
   sidebar,
   feed,
@@ -9,7 +9,7 @@ const Layout = ({
   children: ReactNode;
   sidebar: ReactNode;
   feed: ReactNode;
-}) => {
+}) {
   return (
     <div>
       <div>
@@ -23,6 +23,4 @@ const Layout = ({
       {children}
     </div>
   );
-};
-
-export default Layout;
+}

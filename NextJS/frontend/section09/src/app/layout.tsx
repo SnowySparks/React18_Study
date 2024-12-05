@@ -2,13 +2,12 @@ import "./globals.css";
 import Link from "next/link";
 import style from "./layout.module.css";
 import { BookData } from "@/types";
+import { ReactNode } from "react";
 
 async function Footer() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
-    {
-      cache: "force-cache",
-    }
+    { cache: "force-cache" }
   );
   if (!response.ok) {
     return <footer>제작 @winterlood</footer>;
@@ -30,7 +29,7 @@ export default function RootLayout({
   modal,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
+  modal: ReactNode;
 }>) {
   return (
     <html lang="en">

@@ -9,7 +9,7 @@ export async function deleteReviewAction(_: any, formData: FormData) {
   if (!reviewId) {
     return {
       status: false,
-      error: "삭제할 리뷰가 없습니다.",
+      error: "삭제할 리뷰가 없습니다",
     };
   }
 
@@ -24,6 +24,7 @@ export async function deleteReviewAction(_: any, formData: FormData) {
     if (!response.ok) {
       throw new Error(response.statusText);
     }
+
     revalidateTag(`review-${bookId}`);
     return {
       status: true,

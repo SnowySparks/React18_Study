@@ -1,8 +1,7 @@
 "use client";
 
 import style from "./review-editor.module.css";
-import { createReviewAction } from "@/actions/create-review-action";
-import { stat } from "fs";
+import { createReviewAction } from "@/actions/create-review.action";
 import { useActionState, useEffect } from "react";
 
 export default function ReviewEditor({ bookId }: { bookId: string }) {
@@ -12,7 +11,7 @@ export default function ReviewEditor({ bookId }: { bookId: string }) {
   );
 
   useEffect(() => {
-    if (state && state.status) {
+    if (state && !state.status) {
       alert(state.error);
     }
   }, [state]);
@@ -20,7 +19,7 @@ export default function ReviewEditor({ bookId }: { bookId: string }) {
   return (
     <section>
       <form className={style.form_container} action={formAction}>
-        <input name="bookId" defaultValue={bookId} readOnly hidden />
+        <input name="bookId" value={bookId} hidden />
         <textarea
           disabled={isPending}
           required

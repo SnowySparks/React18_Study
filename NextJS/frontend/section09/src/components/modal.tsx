@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import style from "./modal.module.css";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 
-export default function Modal({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
+export default function Modal({ children }: { children: ReactNode }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!dialogRef.current?.open) {
@@ -17,14 +17,12 @@ export default function Modal({ children }: { children: React.ReactNode }) {
       });
     }
   }, []);
+
   return createPortal(
     <dialog
-      onClose={() => {
-        // esc 눌러 모달 종료
-        router.back();
-      }}
+      onClose={() => router.back()}
       onClick={(e) => {
-        // 모달 배경이 클릭이 된 것이면 -> 뒤로가기
+        // 모달의 배경이 클릭이된거면 -> 뒤로가기
         if ((e.target as any).nodeName === "DIALOG") {
           router.back();
         }
