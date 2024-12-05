@@ -53,8 +53,6 @@ async function RecoBooks() {
   );
 }
 
-export const dynamic = "force-dynamic";
-
 // 메터데이터 설정
 // 이미지는 /로 시작하게 되면 public 폴더로 인식하게 됨
 export const metadata: Metadata = {
@@ -72,15 +70,11 @@ export default function Home() {
     <div className={style.container}>
       <section>
         <h3>지금 추천하는 도서</h3>
-        <Suspense fallback={<BookListSkeleton count={3} />}>
-          <RecoBooks />
-        </Suspense>
+        <RecoBooks />
       </section>
       <section>
         <h3>등록된 모든 도서</h3>
-        <Suspense fallback={<BookListSkeleton count={10} />}>
-          <AllBooks />
-        </Suspense>
+        <AllBooks />
       </section>
     </div>
   );
